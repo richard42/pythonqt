@@ -66,6 +66,9 @@ PYTHONQT_GENERATED_PATH = $$PWD/../generated_cpp
         PYTHONQT_GENERATED_PATH = $$PWD/../generated_cpp_56
       }
     }
+    contains( QT_MAJOR_VERSION, 6 ) {
+        PYTHONQT_GENERATED_PATH = $$PWD/../generated_cpp_511
+    }
   }
 }
 
