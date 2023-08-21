@@ -102,6 +102,7 @@ void PythonQt::init(int flags, const QByteArray& pythonQtModuleName)
     }
 
 #ifdef PY3K
+    /*
     PythonQtObjectPtr asyncio;
     asyncio.setNewRef(PyImport_ImportModule("asyncio"));
     if (asyncio)
@@ -109,6 +110,7 @@ void PythonQt::init(int flags, const QByteArray& pythonQtModuleName)
       _self->_p->_pyEnsureFuture = asyncio.getVariable("ensure_future");
       _self->_p->_pyFutureClass = asyncio.getVariable("Future");
     }
+    */
 #endif
 
     PythonQt::priv()->setupSharedLibrarySuffixes();
@@ -217,8 +219,8 @@ void PythonQt::init(int flags, const QByteArray& pythonQtModuleName)
     PythonQtRegisterIntegerMapConverter(QHash, QString);
     PythonQtMethodInfo::addParameterTypeAlias("QHash<QNetworkRequest::Attribute,QVariant>", "QHash<int,QVariant>");
 
-    PythonQt_init_QtCoreBuiltin(nullptr);
-    PythonQt_init_QtGuiBuiltin(nullptr);
+    //PythonQt_init_QtCoreBuiltin(nullptr);
+    //PythonQt_init_QtGuiBuiltin(nullptr);
 
     PythonQt::self()->addDecorators(new PythonQtStdDecorators());
     PythonQt::self()->registerCPPClass("QMetaObject",nullptr, "QtCore", PythonQtCreateObject<PythonQtWrapper_QMetaObject>);
@@ -258,6 +260,7 @@ void PythonQt::init(int flags, const QByteArray& pythonQtModuleName)
 
     PyObject* pack = PythonQt::priv()->packageByName("QtCore");
     PyObject* pack2 = PythonQt::priv()->packageByName("Qt");
+    /*
     PyObject* qtNamespace = PythonQt::priv()->getClassInfo("Qt")->pythonQtClassWrapper();
     const char* names[16] = {"SIGNAL", "SLOT", "qAbs", "qBound","qDebug","qWarning","qCritical","qFatal"
                         ,"qFuzzyCompare", "qMax","qMin","qRound","qRound64","qVersion","qrand","qsrand"};
@@ -277,6 +280,7 @@ void PythonQt::init(int flags, const QByteArray& pythonQtModuleName)
         std::cerr << "method not found " << names[i] << std::endl;
       }
     }
+    */
     int enumValues[] = {
       QtDebugMsg,
       QtWarningMsg,
