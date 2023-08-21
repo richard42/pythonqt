@@ -39,6 +39,8 @@
 **
 ****************************************************************************/
 
+#include <algorithm>
+
 #include "prigenerator.h"
 #include "shellgenerator.h"
 #include "reporthandler.h"
@@ -81,8 +83,8 @@ static QString combineIncludes(const QString& text) {
       result += line + "\n";
     }
   }
-  QStringList includeList = includes.toList();
-  qSort(includeList);
+  QStringList includeList = includes.values();
+  std::sort(includeList.begin(), includeList.end());
   result = includeList.join("\n") + result;
   return result;
 }
@@ -129,7 +131,7 @@ void PriGenerator::generate()
         int idx = folder.indexOf('/');
         folder = folder.left(idx);
 
-        qSort(list.begin(), list.end());
+        std::sort(list.begin(), list.end());
         FileOut file(m_out_dir + "/generated_cpp/" + pri.key());
       
         // strange idea to do the file compacting so late, but it is the most effective way without patching the generator a lot
@@ -146,7 +148,7 @@ void PriGenerator::generate()
         file.stream << "\n";
         file.stream << "SOURCES += \\\n";
         list = pri.value().sources;
-        qSort(list.begin(), list.end());
+        std::sort(list.begin(), list.end());
         if (compact) {
           list = compactFiles(list, ".cpp", m_out_dir + "/generated_cpp/" + folder, folder); 
         }

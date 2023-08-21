@@ -42,6 +42,8 @@
 #include "abstractmetalang.h"
 #include "reporthandler.h"
 
+#include <algorithm>
+
 /*******************************************************************************
  * AbstractMetaType
  */
@@ -972,7 +974,7 @@ AbstractMetaFunctionList AbstractMetaClass::virtualOverrideFunctions() const
 
 void AbstractMetaClass::sortFunctions()
 {
-    qSort(m_functions.begin(), m_functions.end(), function_sorter);
+    std::sort(m_functions.begin(), m_functions.end(), function_sorter);
 }
 
 void AbstractMetaClass::setFunctions(const AbstractMetaFunctionList &functions)

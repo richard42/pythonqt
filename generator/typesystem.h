@@ -1159,7 +1159,7 @@ public:
         foreach (const QString &_warning, m_suppressedWarnings) {
             QString warning(QString(_warning).replace("\\*", "&place_holder_for_asterisk;"));
 
-            QStringList segs = warning.split("*", QString::SkipEmptyParts);
+            QStringList segs = warning.split("*", Qt::SkipEmptyParts);
             if (segs.size() == 0)
                 continue ;
 

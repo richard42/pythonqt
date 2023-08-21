@@ -68,7 +68,7 @@ SOURCES += \
 
 
    
-QT += core xml
+QT += core xml core5compat
 
 win32-msvc.net {
         QMAKE_CXXFLAGS += /Zm500

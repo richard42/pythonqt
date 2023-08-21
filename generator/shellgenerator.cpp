@@ -43,6 +43,7 @@
 #include "reporthandler.h"
 
 #include "metaqtscript.h"
+#include <algorithm>
 #include <iostream>
 
 bool ShellGenerator::shouldGenerate(const AbstractMetaClass *meta_class) const
@@ -322,7 +323,7 @@ AbstractMetaFunctionList ShellGenerator::getFunctionsToWrap(const AbstractMetaCl
     AbstractMetaClass::VirtualFunctions | AbstractMetaClass::WasVisible
     | AbstractMetaClass::NotRemovedFromTargetLang | AbstractMetaClass::ClassImplements
     );
-  QSet<AbstractMetaFunction*> set1 = QSet<AbstractMetaFunction*>::fromList(functions);
+  QSet<AbstractMetaFunction*> set1(functions.begin(), functions.end());
   for (AbstractMetaFunction* func :  functions2) {
     set1.insert(func);
   }
@@ -331,14 +332,14 @@ AbstractMetaFunctionList ShellGenerator::getFunctionsToWrap(const AbstractMetaCl
 
   bool hasPromoter = meta_class->typeEntry()->shouldCreatePromoter();
 
-  for (AbstractMetaFunction* func :  set1.toList()) {
+  for (AbstractMetaFunction* func :  set1.values()) {
     if (func->implementingClass()==meta_class) {
       if (hasPromoter || func->wasPublic()) {
         resultFunctions << func;
       }
     }
   }
-  qSort(resultFunctions.begin(), resultFunctions.end(), function_sorter);
+  std::sort(resultFunctions.begin(), resultFunctions.end(), function_sorter);
   return resultFunctions;
 }
 
@@ -348,7 +349,7 @@ AbstractMetaFunctionList ShellGenerator::getVirtualFunctionsForShell(const Abstr
     AbstractMetaClass::VirtualFunctions | AbstractMetaClass::WasVisible
         | AbstractMetaClass::NotRemovedFromTargetLang
     );
-  qSort(functions.begin(), functions.end(), function_sorter);
+  std::sort(functions.begin(), functions.end(), function_sorter);
   return functions;
 }
 
@@ -361,7 +362,7 @@ AbstractMetaFunctionList ShellGenerator::getProtectedFunctionsThatNeedPromotion(
       functions << func;
     }
   }
-  qSort(functions.begin(), functions.end(), function_sorter);
+  std::sort(functions.begin(), functions.end(), function_sorter);
   return functions;
 }
 
@@ -384,7 +385,7 @@ void ShellGenerator::writeInclude(QTextStream &stream, const Include &inc)
     stream << ">";
   else
     stream << "\"";
-  stream << endl;
+  stream << Qt::endl;
 }
 
 /*!

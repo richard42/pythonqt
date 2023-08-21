@@ -48,7 +48,7 @@
 #include "codemodel.h"
 
 class QString;
-class QStringList;
+using QStringList = QList<QString>;
 struct TypeSpecifierAST;
 struct DeclaratorAST;
 class TokenStream;
